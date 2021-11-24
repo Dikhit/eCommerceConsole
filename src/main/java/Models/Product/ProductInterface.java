@@ -1,12 +1,14 @@
 package Models.Product;
 
+import java.util.List;
+
 import Models.User.User;
 
 public interface ProductInterface {
-    boolean addProduct(Product product);
+    int addProduct(Product product);
     Product getProductById(String id);
-    Product[] getProductByUser(User user);
-    Product[] getAllProduct();
-    Product updateProduct(Product product);
-    boolean deleteProduct(Product product);
+    List<Product> getProductByUser(User user);
+    List<Product> getAllProduct();
+    int updateProduct(Product product);
+    int deleteProduct(Product product);
 }

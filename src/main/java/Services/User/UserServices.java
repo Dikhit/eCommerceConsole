@@ -1,5 +1,8 @@
 package Services.User;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import Models.User.User;
@@ -24,13 +27,19 @@ public class UserServices implements UserInterface{
 	}
 
 	public int register(User user) {
-//		String sql = 
-		return 0;
+		String sql = "insert into user (id, name, email, walletPrice, password, role) values(?,?, ?, ?, ?, ?)";
+		int result = jdbcTemplate.update(
+				sql, 
+				new UserRowMapper(), 
+				user.getId(), user.getName(), user.getEmail(), user.getWalletPrice(), user.getRole()
+			);
+		return result;
 	}
 
-	public User updateUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updateUser(User user) {
+		String sql = "update users set name=?, email = ?, walletPrice=?, password= ?, role = ? where id = ?";
+		int result= jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getWalletPrice(), user.getPassword(), user.getRole());
+		return result;
 	}
 
 	public int deleteUser(User user) {
@@ -39,13 +48,15 @@ public class UserServices implements UserInterface{
 	}
 
 	public User getUserById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from users where id = ?";
+		User user = jdbcTemplate.queryForObject(sql, new UserRowMapper(), id);
+		return user;
 	}
 
-	public User[] getAllUser() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<User> getAllUser() {
+		String sql = "select * from users";
+		List<User> users = jdbcTemplate.query(sql, new UserRowMapper());
+		return users;
 	}
 	
 }

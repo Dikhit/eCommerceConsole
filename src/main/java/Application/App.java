@@ -12,6 +12,7 @@ public class App {
 		UserServices userServices = (UserServices) context.getBean("user");
 		
 		System.out.println(userServices.logIn("dikhitbhuyan@gmail.com", "kaku0001"));
+		System.out.println(userServices.getAllUser());
 		
 	}
 }	
