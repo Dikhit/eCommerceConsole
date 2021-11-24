@@ -12,10 +12,13 @@ public class OrderRowMapper implements RowMapper<Order>{
 	public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
 		return new Order(
 				rs.getString("id"),
-				rs.getString("customerID"),
-				rs.getString("productID"),
+				rs.getString("customer"),
+				rs.getString("product"),
 				rs.getInt("quantity"),
-				rs.getString("date")
+				rs.getInt("totalPrice"),
+				rs.getBoolean("isAccepted"),
+				rs.getString("vendor"),
+				rs.getString("orderedAt")
 			);
 	}
 }

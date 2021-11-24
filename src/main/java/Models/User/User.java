@@ -3,12 +3,12 @@ package Models.User;
 import java.util.UUID;
 
 public class User {
-    String id;
-    String name;
-    String email;
-    int walletPrice;
-    String password;
-    String role;
+    private String id;
+    private String name;
+    private String email;
+    private int walletPrice;
+    private String password;
+    private String role;
 
     public User(){
 

@@ -38,13 +38,41 @@ public class OrderService implements OrderInterface{
 
 	public List<Order> getOrderByUser(User user) {
 		String sql = "select * from orders where customer = ?";
-		List<Order> orders = jdbcTemplate.query(sql, new OrderRowMapper());
+		List<Order> orders = jdbcTemplate.query(sql, new OrderRowMapper(), user.getId());
 		return orders;
 	}
 
 	public List<Order> getAllOrders() {
-		String sql = "select * from orders;";
+		String sql = "select * from orders";
 		List<Order> orders = jdbcTemplate.query(sql, new OrderRowMapper());
+		return orders;
+	}
+	
+	public List<Order> getAllUnAcceptedOrder(User user){
+		String sql = "select * from orders where vendor = ?";
+		List<Order> orders = jdbcTemplate.query(sql, new OrderRowMapper(), user.getId());
+		for (Order order : orders) {
+			if(order.isAccepted() == true) {
+				orders.remove(order);
+			}
+		}
+		return orders;
+	}
+	
+	public List<Order> getAllAcceptedOrder(User user){
+		String sql = "select * from orders where vendor = ?";
+		List<Order> orders = jdbcTemplate.query(sql, new OrderRowMapper(), user.getId());
+		for (Order order : orders) {
+			if(order.isAccepted() == false) {
+				orders.remove(order);
+			}
+		}
+		return orders;
+	}
+	
+	public List<Order> getAllOrdersFromUsers(User user){
+		String sql = "select * from orders where vendor = ?";
+		List<Order> orders = jdbcTemplate.query(sql, new OrderRowMapper(), user.getId());
 		return orders;
 	}
 

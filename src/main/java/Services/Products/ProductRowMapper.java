@@ -16,7 +16,7 @@ public class ProductRowMapper implements RowMapper<Product> {
                 rs.getInt("price"),
                 rs.getString("description"),
                 rs.getString("vendorID"),
-                rs.getString("date")
+                rs.getString("createdAt")
         );
     }
 }

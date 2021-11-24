@@ -28,4 +28,17 @@
         class="Services.User.UserServices"
         p:jdbcTemplate-ref="jdbcTemplate"
     />
+    
+    <bean
+        name="product"
+        class="Services.Products.ProductService"
+        p:jdbcTemplate-ref="jdbcTemplate"
+    />
+    
+    
+    <bean
+        name="order"
+        class="Services.Order.OrderService"
+        p:jdbcTemplate-ref="jdbcTemplate"
+    />
 </beans>

@@ -3,12 +3,12 @@ package Models.Product;
 import java.util.UUID;
 
 public class Product {
-    String id;
-    String name;
-    int price;
-    String description;
-    String vendorID;
-    String date;
+    private String id;
+    private String name;
+    private int price;
+    private String description;
+    private String vendorID;
+    private String date;
 
     public String getDate() {
         return date;
