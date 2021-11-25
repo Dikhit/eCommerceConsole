@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import Models.Order.Order;
 import Models.Order.OrderInterface;
+import Models.Product.Product;
 import Models.User.User;
 
 public class OrderService implements OrderInterface{
@@ -75,5 +76,12 @@ public class OrderService implements OrderInterface{
 		List<Order> orders = jdbcTemplate.query(sql, new OrderRowMapper(), user.getId());
 		return orders;
 	}
+	
+	public int handleAccepting(Order order) {
+		String sql = "update oders set isAccepted = true where vendor = ? and product = ?";
+		int result = jdbcTemplate.update(sql, new OrderRowMapper(), order.getVendorID(), order.getProductID());
+		return result;
+	}
+	
 
 }

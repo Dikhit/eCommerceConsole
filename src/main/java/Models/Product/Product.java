@@ -83,6 +83,7 @@ public class Product {
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", vendorID='" + vendorID + '\'' +
+                ", createdAt='" + date + '\'' +
                 '}';
     }
 }

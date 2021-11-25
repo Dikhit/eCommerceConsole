@@ -100,6 +100,7 @@ public class Order {
         return "Order{" +
                 "id='" + id + '\'' +
                 ", customerID='" + customerID + '\'' +
+                ", vendorID='" + vendorID + '\'' +
                 ", productID='" + productID + '\'' +
                 ", quantity=" + quantity +
                 ", totalPrice=" + totalPrice +
