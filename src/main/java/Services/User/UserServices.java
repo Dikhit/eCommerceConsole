@@ -1,5 +1,7 @@
 package Services.User;
 
+import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -26,20 +28,21 @@ public class UserServices implements UserInterface{
 		return user;
 	}
 
-	public int register(User user) {
-		String sql = "insert into user (id, name, email, walletPrice, password, role) values(?,?, ?, ?, ?, ?)";
-		int result = jdbcTemplate.update(
-				sql, 
-				new UserRowMapper(), 
-				user.getId(), user.getName(), user.getEmail(), user.getWalletPrice(), user.getRole()
-			);
-		return result;
+	public User register(User user) {
+		String sql = "insert into users(id, name, email, walletPrice, password, role) values(?, ?, ?, ?, ?, ?)";
+		Serializable result =  jdbcTemplate.update(
+				sql,
+				user.getId(), user.getName(), user.getEmail(), user.getWalletPrice(), user.getPassword(), user.getRole()
+		);
+		System.out.println(result);
+		return getUserById(user.getId());
+		
 	}
 
-	public int updateUser(User user) {
+	public User updateUser(User user) {
 		String sql = "update users set name=?, email = ?, walletPrice=?, password= ?, role = ? where id = ?";
-		int result= jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getWalletPrice(), user.getPassword(), user.getRole());
-		return result;
+		jdbcTemplate.update(sql, user.getName(), user.getEmail(), user.getWalletPrice(), user.getPassword(), user.getRole(), user.getId());
+		return getUserById(user.getId());
 	}
 
 	public int deleteUser(User user) {

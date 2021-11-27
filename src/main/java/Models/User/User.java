@@ -9,6 +9,7 @@ public class User {
     private int walletPrice;
     private String password;
     private String role;
+	private String date;
 
     public User(){
 
@@ -23,13 +24,14 @@ public class User {
         this.role = "CUSTOMER";
     }
 
-    public User(String id, String name, String email, int walletPrice, String password, String role) {
+    public User(String id, String name, String email, int walletPrice, String password, String role, String date) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.walletPrice = walletPrice;
         this.password = password;
         this.role = role;
+        this.date = date;
     }
 
     public String getId() {
@@ -79,6 +81,14 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+    
+    public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
 
 	@Override
 	public String toString() {

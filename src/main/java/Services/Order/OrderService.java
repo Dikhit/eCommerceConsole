@@ -21,14 +21,15 @@ public class OrderService implements OrderInterface{
 	}
 
 	public int createOrder(Order order) {
-		String sql = "insert into orders (id, customer, product, quantity) values (?, ?, ?, ?)";
+		String sql = "insert into orders (id, customer, vendor, product, quantity, totalPrice) values (?, ?, ?, ?, ?, ?)";
 		int result = jdbcTemplate.update(
-				sql, 
-				new OrderRowMapper(),
+				sql,
 				order.getId(),
 				order.getCustomerID(),
+				order.getVendorID(),
 				order.getProductID(),
-				order.getQuantity()
+				order.getQuantity(),
+				order.getTotalPrice()
 			);
 		return result;
 	}

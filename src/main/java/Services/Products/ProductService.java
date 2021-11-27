@@ -22,8 +22,7 @@ public class ProductService implements ProductInterface{
 	public int addProduct(Product product) {
 		String sql = "insert into products (id, name, price, description, vendorID ) values(?, ?, ?, ?, ?)";
 		int result = jdbcTemplate.update(
-				sql, 
-				new ProductRowMapper(),
+				sql,
 				product.getId(),
 				product.getName(),
 				product.getPrice(),
@@ -41,7 +40,7 @@ public class ProductService implements ProductInterface{
 
 	public List<Product> getProductByUser(User user) {
 		String sql = "select * from products where vendorID = ?";
-		List<Product> products= jdbcTemplate.query(sql,  new ProductRowMapper());
+		List<Product> products= jdbcTemplate.query(sql,  new ProductRowMapper(), user.getId());
 		return products;
 	}
 

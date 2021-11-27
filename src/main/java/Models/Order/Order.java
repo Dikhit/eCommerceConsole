@@ -23,12 +23,13 @@ public class Order {
         this.vendorID = vendorID;
     }
 
-	public Order(String customerID, String productID, int quantity, int totalPrice) {
+	public Order(String customerID, String vendorID, String productID, int quantity, int totalPrice) {
         this.id = UUID.randomUUID().toString();
         this.customerID = customerID;
         this.productID = productID;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
+        this.vendorID = vendorID;
     }
 
     public String getId() {
