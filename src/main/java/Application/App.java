@@ -1,9 +1,7 @@
 package Application;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.UUID;
 
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -77,9 +75,12 @@ public class App {
 
 	                            System.out.println("4. Display My Products !!");
 	                            System.out.println("5. Add New Product in my store !!");
-
 	                            System.out.println("6. Product Update !!");
-
+	                            
+	                            System.out.println("12. List of Un Accepted Order !!");
+	                            System.out.println("11. List of Accepted Order !!");
+	                            System.out.println("13. List of ordered product from my store !!");
+	                            
 	                            System.out.println("7. Change Role of Any User !!");
 	                            //System.out.println("8. Create new Role !!");
 	                            System.out.println("9. Check all order history !!");
@@ -191,6 +192,60 @@ public class App {
 	                                        System.out.println(o);
 	                                    }
 	                                    break;
+	                                    
+	                                case 11:
+	                                	System.out.println("Product List ...");
+	                                	List<Order> accceptOrderList = orderService.getAllAcceptedOrder(currentUser);
+	                                	int slNum = 0;
+	                                	for(Order unAOrder : accceptOrderList) {
+	                                		System.out.println(slNum);
+	                                		System.out.println(productService.getProductById(unAOrder.getProductID()));
+	                                		System.out.println(userServices.getUserById(unAOrder.getCustomerID()));
+	                                		System.out.println(unAOrder.getTotalPrice());
+	                                		System.out.println(unAOrder.getDate());
+	                                		slNum += 1;
+	                                	}
+	                                	
+	                                	break;
+	                                    
+	                                case 12:
+	                                	System.out.println("Product List ...");
+	                                	List<Order> unAccceptOrderList = orderService.getAllUnAcceptedOrder(currentUser);
+	                                	
+	                                	int slNumber = 0;
+	                                	for(Order unAOrder : unAccceptOrderList) {
+	                                		System.out.println(productService.getProductById(unAOrder.getProductID()));
+	                                		System.out.println(userServices.getUserById(unAOrder.getCustomerID()));
+	                                		System.out.println(unAOrder.getTotalPrice());
+	                                		System.out.println(unAOrder.getDate());
+	                                	}
+	                                	
+	                                	System.out.println("Do you want to accept ? (Y/N)");
+	                                	// TODO: Handle the wallet value !!
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	
+	                                	break;
+	                                	
+	                               default : {
+	                            	   System.out.println("hey there ...");
+	                            	   break;
+	                               }
 	                            }
 	                        }
 
@@ -202,6 +257,11 @@ public class App {
 	                            System.out.println("4. Display My Products !!");
 	                            System.out.println("5. Add New Product in my store !!");
 	                            //System.out.println("6. Product Update !!");
+	                            
+	                            System.out.println("11. List of Un Accepted Order !!");
+	                            System.out.println("12. List of Accepted Order !!");
+	                            System.out.println("13. List of ordered product from my store !!");
+	                            
 
 	                            choice = userInput.nextInt();
 	                            userInput.nextLine();
@@ -254,6 +314,17 @@ public class App {
 	                                case 6:
 	                                    System.out.println("Update Product !!");
 	                                    break;
+	                                    
+	                                case 12:
+	                                	System.out.println("Product List ...");
+	                                	List<Order> unAccceptOrderList = orderService.getAllUnAcceptedOrder(currentUser);
+	                                	for(Order unAOrder : unAccceptOrderList) {
+	                                		System.out.println(productService.getProductById(unAOrder.getProductID()));
+	                                		System.out.println(userServices.getUserById(unAOrder.getCustomerID()));
+	                                		System.out.println(unAOrder.getTotalPrice());
+	                                		System.out.println(unAOrder.getDate());
+	                                	}
+	                                	break;
 	                                default:
 	                                    break;
 	                            }
@@ -292,6 +363,7 @@ public class App {
 	                    break;
 	                default:
 	                    isLoggedOut = true;
+	                    System.out.println("Logged out from the system !!");
 	                    break;
 	            }
 	        }
