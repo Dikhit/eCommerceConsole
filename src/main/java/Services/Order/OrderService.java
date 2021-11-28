@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import Models.Order.Order;
 import Models.Order.OrderInterface;
-import Models.Product.Product;
 import Models.User.User;
 
 public class OrderService implements OrderInterface{
@@ -51,24 +50,15 @@ public class OrderService implements OrderInterface{
 	}
 	
 	public List<Order> getAllUnAcceptedOrder(User user){
-		String sql = "select * from orders where vendor = ?";
+		String sql = "select * from orders where vendor = ? and isAccepted = false";
 		List<Order> orders = jdbcTemplate.query(sql, new OrderRowMapper(), user.getId());
-		for (Order order : orders) {
-			if(order.isAccepted() == true) {
-				orders.remove(order);
-			}
-		}
+		System.out.println(orders.toString());
 		return orders;
 	}
 	
 	public List<Order> getAllAcceptedOrder(User user){
-		String sql = "select * from orders where vendor = ?";
+		String sql = "select * from orders where vendor = ? and isAccepted = true";
 		List<Order> orders = jdbcTemplate.query(sql, new OrderRowMapper(), user.getId());
-		for (Order order : orders) {
-			if(order.isAccepted() == false) {
-				orders.remove(order);
-			}
-		}
 		return orders;
 	}
 	
@@ -79,8 +69,8 @@ public class OrderService implements OrderInterface{
 	}
 	
 	public int handleAccepting(Order order) {
-		String sql = "update oders set isAccepted = true where vendor = ? and product = ?";
-		int result = jdbcTemplate.update(sql, new OrderRowMapper(), order.getVendorID(), order.getProductID());
+		String sql = "update orders set isAccepted = true where id = ?";
+		int result = jdbcTemplate.update(sql, order.getId());
 		return result;
 	}
 	

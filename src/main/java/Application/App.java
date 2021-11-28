@@ -77,8 +77,8 @@ public class App {
 	                            System.out.println("5. Add New Product in my store !!");
 	                            System.out.println("6. Product Update !!");
 	                            
-	                            System.out.println("12. List of Un Accepted Order !!");
 	                            System.out.println("11. List of Accepted Order !!");
+	                            System.out.println("12. List of Un Accepted Order !!");
 	                            System.out.println("13. List of ordered product from my store !!");
 	                            
 	                            System.out.println("7. Change Role of Any User !!");
@@ -214,6 +214,7 @@ public class App {
 	                                	
 	                                	int slNumber = 0;
 	                                	for(Order unAOrder : unAccceptOrderList) {
+	                                		System.out.println(slNumber + "--->");
 	                                		System.out.println(productService.getProductById(unAOrder.getProductID()));
 	                                		System.out.println(userServices.getUserById(unAOrder.getCustomerID()));
 	                                		System.out.println(unAOrder.getTotalPrice());
@@ -221,24 +222,27 @@ public class App {
 	                                	}
 	                                	
 	                                	System.out.println("Do you want to accept ? (Y/N)");
-	                                	// TODO: Handle the wallet value !!
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
-	                                	
+	                                	String input = userInput.next().trim();
+	                                	if(input.toUpperCase().equals("Y")) {
+	                                		System.out.println("Enter the order number : ");
+	                                		choice = userInput.nextInt();
+	                                		userInput.nextLine();
+	                                		
+	                                		Order selectedOrder = unAccceptOrderList.get(choice);
+	                                		if(orderService.handleAccepting(selectedOrder) == 1) {
+	                                			User orderedCusrtomer = userServices.getUserById(selectedOrder.getCustomerID());
+	                                			orderedCusrtomer.setWalletPrice(orderedCusrtomer.getWalletPrice() - selectedOrder.getTotalPrice());
+	                                			if(userServices.updateUser(orderedCusrtomer) != null) {
+	                                				System.out.println("Order accepted Successfully");
+	                                			}
+	                                			else {
+	                                				System.out.println("Payment Failed !!");
+	                                			}
+	                                		}
+	                                		else {
+	                                			System.out.println("Order Rejected !!");
+	                                		}
+	                                	}
 	                                	
 	                                	break;
 	                                	
@@ -258,8 +262,8 @@ public class App {
 	                            System.out.println("5. Add New Product in my store !!");
 	                            //System.out.println("6. Product Update !!");
 	                            
-	                            System.out.println("11. List of Un Accepted Order !!");
-	                            System.out.println("12. List of Accepted Order !!");
+	                            System.out.println("12. List of Un Accepted Order !!");
+	                            System.out.println("11. List of Accepted Order !!");
 	                            System.out.println("13. List of ordered product from my store !!");
 	                            
 
@@ -315,15 +319,56 @@ public class App {
 	                                    System.out.println("Update Product !!");
 	                                    break;
 	                                    
+	                                case 11:
+	                                	System.out.println("Accpted Order List ...");
+	                                	List<Order> accceptOrderList = orderService.getAllAcceptedOrder(currentUser);
+	                                	int slNum = 0;
+	                                	for(Order unAOrder : accceptOrderList) {
+	                                		System.out.println(slNum);
+	                                		System.out.println(productService.getProductById(unAOrder.getProductID()));
+	                                		System.out.println(userServices.getUserById(unAOrder.getCustomerID()));
+	                                		System.out.println(unAOrder.getTotalPrice());
+	                                		System.out.println(unAOrder.getDate());
+	                                		slNum += 1;
+	                                	}
+	                                	
+	                                	break;
+	                                    
 	                                case 12:
-	                                	System.out.println("Product List ...");
+	                                	System.out.println("Unaccpted Order List ...");
 	                                	List<Order> unAccceptOrderList = orderService.getAllUnAcceptedOrder(currentUser);
+	                                	
+	                                	int slNumber = 0;
 	                                	for(Order unAOrder : unAccceptOrderList) {
 	                                		System.out.println(productService.getProductById(unAOrder.getProductID()));
 	                                		System.out.println(userServices.getUserById(unAOrder.getCustomerID()));
 	                                		System.out.println(unAOrder.getTotalPrice());
 	                                		System.out.println(unAOrder.getDate());
 	                                	}
+	                                	
+	                                	System.out.println("Do you want to accept ? (Y/N)");
+	                                	String input = userInput.next().trim();
+	                                	if(input.toUpperCase().equals("Y")) {
+	                                		System.out.println("Enter the order number : ");
+	                                		choice = userInput.nextInt();
+	                                		userInput.nextLine();
+	                                		
+	                                		Order selectedOrder = unAccceptOrderList.get(choice);
+	                                		if(orderService.handleAccepting(selectedOrder) == 1) {
+	                                			User orderedCusrtomer = userServices.getUserById(selectedOrder.getCustomerID());
+	                                			orderedCusrtomer.setWalletPrice(orderedCusrtomer.getWalletPrice() - selectedOrder.getTotalPrice());
+	                                			if(userServices.updateUser(orderedCusrtomer) != null) {
+	                                				System.out.println("Order accepted Successfully");
+	                                			}
+	                                			else {
+	                                				System.out.println("Payment Failed !!");
+	                                			}
+	                                		}
+	                                		else {
+	                                			System.out.println("Order Rejected !!");
+	                                		}
+	                                	}
+	                                	
 	                                	break;
 	                                default:
 	                                    break;
